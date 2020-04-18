@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+{% block title %}Hello {{ controller_name }}!{% endblock %}
+
+{% block body %}
+
+    <div class="articles">
+        {% for article in articles %}
+
+            <div class="jumbotron text-center">
+            <h2>{{ article.title }}</h2>
+            <div class="metadata">Ecrit le {{ article.createdAt | date('d/m/Y') }} à {{article.createdAt | date('H:i')}} </div>
+            <div class="content"><img src={{ article.image }} alt=""></div>
+
+
+
+            <div class="etst"
+           {{ article.content | raw }}
+            </div>
+            <style>
+                a.btn-primary{
+                    display: flex; justify-content: center;
+                }
+
+                div.etst{
+
+                    text-align: left;
+                }
+
+            </style>
+                <a href="{{ path('show', {'id': article.id}) }}" class="btn btn-primary">Lire la suite</a>
+            </div>
+            </div>
+
+        {% endfor %}
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,7 @@
+html,
+nav ul {
+    display: flex;
+    list-style-type: none;
+}
+li {
+    margin: 0 10px;}
