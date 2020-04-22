@@ -3,6 +3,7 @@
 
 {% block body %}
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <div class="jumbotron">
     <article>
         <div class="jumbotron text-center">
         <h2>{{ article.title }}</h2>
@@ -10,11 +11,15 @@
 
         <div class="content"><img src="{{ article.image }}" alt=""></div>
         </div>
-            {{ article.content }}
+
           {{ article.content | raw }}
 
     </article>
-
+<style>
+    button.btn-success{
+         justify-content: center;
+    }
+</style>
     <hr>
     <section id="commentaires">
         {% for comment in article.comments %}
@@ -46,7 +51,7 @@
         {% endif %}
 
     </section>
-
+    </div>
 
 
 {% endblock %}

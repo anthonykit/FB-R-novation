@@ -4,32 +4,45 @@
 {% block body %}
 
     <div class="articles">
-        {% for article in articles %}
 
+        {% for article in articles %}
+            <div class="jumbotron">
             <div class="jumbotron text-center">
             <h2>{{ article.title }}</h2>
             <div class="metadata">Ecrit le {{ article.createdAt | date('d/m/Y') }} à {{article.createdAt | date('H:i')}} </div>
-            <div class="content"><img src={{ article.image }} alt=""></div>
 
+            <div class="content">
 
+                <img src={{ article.image }} alt="">
 
-            <div class="etst"
-           {{ article.content | raw }}
+                <hr>
+                    <div class="align-content-left">
+                        {{ article.content | raw}}
+                    </div>
+            {#<div class="etst"
+           {{ article.content | raw}}
+            </div>#}
+            </div>
             </div>
             <style>
                 a.btn-primary{
                     display: flex; justify-content: center;
                 }
 
-                div.etst{
+                div.align-content-left{
 
                     text-align: left;
                 }
 
             </style>
                 <a href="{{ path('show', {'id': article.id}) }}" class="btn btn-primary">Lire la suite</a>
+
             </div>
-            </div>
+
+
+
+
+
 
         {% endfor %}
 

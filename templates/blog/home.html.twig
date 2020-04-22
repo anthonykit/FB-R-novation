@@ -1,8 +1,30 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-
+<div class="jumbotron">
     <div class=jumbotron text-center>
+
+        <div class="message">
         <h1>Bienvenue sur le site FB Rénovation</h1>
         <h2>Notre entreprise vous propose ses services</h2>
+        </div>
     </div>
+        <hr>
+        <div class="MessageForm">
+        <h3>Contactez nous!</h3>
+        </div>
+        <div id="Contact" class="col-mt-4"></div>
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col"> {{ form_row(form.firstname,{'label': "Prénom"}) }}</div>
+            <div class="col"> {{ form_row(form.lastname,{'label': 'Nom'}) }}</div>
+        </div>
+        <div class="row">
+            <div class="col"> {{ form_row(form.phone,{'label':"Numéro de téléphone"}) }}</div>
+            <div class="col"> {{ form_row(form.email,{'label': 'Adresse Email'}) }}</div>
+        </div>
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+        <button class="btn btn btn-primary">Envoyer</button>
+    </div>
+
 {% endblock %}

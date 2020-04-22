@@ -5,7 +5,10 @@ namespace App\Controller;
 
 use App\Entity\Article3;
 use App\Entity\Comment;
+use App\Entity\Contact;
 use App\Form\CommentType;
+use App\Form\ContactType;
+use App\Notification\ContactNotification;
 use App\Repository\Article3Repository;
 
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -17,6 +20,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Date;
+
 
 
 
@@ -40,9 +44,19 @@ class BlogController extends Controller\AbstractController
      * @return mixed
      * @Route("/", name="home");
      */
-    public function home()
+    public function home(Request $request,ContactNotification $contactNotification)
     {
-        return $this->render('blog/home.html.twig');
+        $contact = new Contact();
+        $form = $this->createForm(ContactType::class,$contact);
+        if ($form->isSubmitted() && $form->isValid()){
+            $contactNotification->notify($contact);
+            $this->addFlash('success','Votre message a bien été envoyé');
+        }
+        return $this->render('blog/home.html.twig',[
+            'form'=> $form->createView()
+        ]);
+
+
     }
 
     /**
