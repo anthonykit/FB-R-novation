@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block body %}
 <div class="jumbotron">
-    <div class=jumbotron text-center>
+    <div class="jumbotron text-center">
 
         <div class="message">
         <h1>Bienvenue sur le site FB Rénovation</h1>
@@ -22,9 +22,13 @@
             <div class="col"> {{ form_row(form.phone,{'label':"Numéro de téléphone"}) }}</div>
             <div class="col"> {{ form_row(form.email,{'label': 'Adresse Email'}) }}</div>
         </div>
-        {{ form_rest(form) }}
-        {{ form_end(form) }}
-        <button class="btn btn btn-primary">Envoyer</button>
+    <div class="row">
+        <div class="col"> {{ form_row(form.message,{'label':"Message"}) }}</div>
+
     </div>
+        {{ form_row(form.envoyer) }}
+        {{ form_end(form) }}
+
+</div>
 
 {% endblock %}

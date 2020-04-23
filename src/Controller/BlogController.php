@@ -48,13 +48,38 @@ class BlogController extends Controller\AbstractController
      * @return mixed
      * @Route("/", name="home");
      */
-    public function home(Request $request,ContactNotification $contactNotification)
+    public function home(Request $request,ContactNotification $contactNotification, \Swift_Mailer $mailer)
     {
-        $contact = new Contact();
-        $form = $this->createForm(ContactType::class,$contact);
+
+        $form = $this->createForm(ContactType::class);
+        $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()){
-            $contactNotification->notify($contact);
-            $this->addFlash('success','Votre message a bien été envoyé');
+            $contact = $form->getData();
+            $file = $contact->getImage();
+            $fileName= md5(uniqid()).'.' .$file->guessExtension();
+            try {
+                $file->move(
+                    $this->getParameter('images_demand'),
+                    $fileName
+                );
+            } catch (FileException $e) {}
+            $contact->setImage($fileName);
+
+                $message = (new \Swift_Message('Nouvelle demande'))
+                ->setFrom($contact->getEmail())
+                ->setTo('contact@fbrenovation.fr')
+                ->setBody(
+
+                    $this->renderView(
+                        'email/contact.html.twig', compact('contact')
+                    ),
+                    'text/html'
+                )
+             ;
+
+            $mailer->send($message);
+            $this->addFlash('message', 'Le message a bien été envoyé');
+
         }
         return $this->render('blog/home.html.twig',[
             'form'=> $form->createView()
@@ -62,6 +87,7 @@ class BlogController extends Controller\AbstractController
 
 
     }
+
 
     /**
      * @Route("/blog/new", name="blog_create")

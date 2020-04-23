@@ -101,6 +101,23 @@ class Contact
         $this->message = $message;
         return $this;
     }
+
+
+    /**
+     * @return
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param mixed $image
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+    }
 /**
  * @var string|null
  * @Assert\NotBlank()
@@ -133,4 +150,11 @@ private $email;
  * @Assert\Length(min=10)
  */
 private $message;
+    /**
+     * @var string|null
+     * @Assert\NotBlank()
+     * @Assert\Length(min=1)
+     */
+private $image;
+
 }
