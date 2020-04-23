@@ -11,6 +11,8 @@ use App\Form\ContactType;
 use App\Notification\ContactNotification;
 use App\Repository\Article3Repository;
 
+use Symfony\Component\Config\Loader\FileLoader;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,7 +22,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Date;
-
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 
 
@@ -65,14 +69,28 @@ class BlogController extends Controller\AbstractController
      * @return \Symfony\Component\Form\FormTypeInterface;
      */
     public function create(Request $request, EntityManagerInterface $entityManager){
+
         $article= new Article3();
         $form= $this->createFormBuilder($article)
                     ->add('title')
                     ->add('content')
-                    ->add('image')
+                    ->add('image', FileType::class)
                     ->getForm();
             $form->handleRequest($request);
             if ($form->isSubmitted()&& $form->isValid()){
+                $file = $article->getImage();
+                $fileName= md5(uniqid()).'.' .$file->guessExtension();
+                try {
+                    $file->move(
+                        $this->getParameter('images_directory'),
+                        $fileName
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+
+                $article->setImage($fileName);
                 $article->setCreatedAt(new \DateTime());
                 $entityManager->persist($article);
                 $entityManager->flush();

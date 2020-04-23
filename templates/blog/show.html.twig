@@ -9,8 +9,12 @@
         <h2>{{ article.title }}</h2>
         <div class="metadata">Ecrit le {{ article.createdAt | date('d/m/Y') }} à {{ article.createdAt | date('H:i') }}</div>
 
-        <div class="content"><img src="{{ article.image }}" alt=""></div>
+        <div class="content">
+            <div class="image">
+                <img src="{{asset('uploads/images/') ~ article.image }}" alt="" style="max-width: 100%;height: auto;">
+            </div>
         </div>
+            <hr>
 
           {{ article.content | raw }}
 
@@ -21,6 +25,7 @@
     }
 </style>
     <hr>
+        <h3>Laissez un commentaire!</h3>
     <section id="commentaires">
         {% for comment in article.comments %}
         <div class="comment">
@@ -38,6 +43,7 @@
         {{ form_start(commentForm) }}
         {{ form_row(commentForm.author, {'label': "Nom de l'auteur", 'attr': {'placeholder': "Votre nom"}}) }}
         {{ form_row(commentForm.content, {'label':"Contenu du commentaire", 'attr': {'placeholder': "Votre commentaire"}}) }}
+
 
         <button type="submit" class="btn btn-success">Commenter</button>
         {{ form_end(commentForm) }}

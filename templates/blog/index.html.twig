@@ -10,10 +10,16 @@
             <div class="jumbotron text-center">
             <h2>{{ article.title }}</h2>
             <div class="metadata">Ecrit le {{ article.createdAt | date('d/m/Y') }} à {{article.createdAt | date('H:i')}} </div>
-
+            <style>
+                .img{
+                    max-width: 100%;
+                    height: auto;
+                }
+            </style>
             <div class="content">
-
-                <img src={{ article.image }} alt="">
+                <div class="image">
+                <img src="{{asset('uploads/images/') ~ article.image }}" alt="" style="max-width: 100%;height: auto;">
+                </div>
 
                 <hr>
                     <div class="align-content-left">
