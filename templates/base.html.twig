@@ -44,12 +44,14 @@
                     font-family: sans-serif;
                     background: linear-gradient(#141e30, #243b55);
                 }
-                ul.form-inline{
+                ul{
                     list-style: none;
-                    display: flex;
-                    justify-content: normal;
-                    float: left;
+
                 }
+                li{
+                    list-style: none;
+                }
+
                 img{
                     max-width: 100%;
                     height: auto;
@@ -64,9 +66,9 @@
                     <li class= "item">
                         <a href="{{ path('security_registration') }}" class="btn btn-success">S'inscrire</a>
                     </li>
-            </ul>
+
                 {% else %}
-            <ul  id="test" class="form-inline my-2 my-lg-0">
+
                     <li class= "item">
                         <a href="{{ path('security_logout') }}" class="btn btn-danger">Deconnexion</a>
                     </li>

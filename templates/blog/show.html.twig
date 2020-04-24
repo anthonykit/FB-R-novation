@@ -33,11 +33,13 @@
                 <div class="col-3">
                     {{ comment.author }} <small> {{ comment.createdAt | date('c') }}</small>
                 </div>
+
                 <div class="col">
                     {{ comment.content | raw }}
                 </div>
             </div>
         </div>
+            <hr>
 {% endfor %}
         {% if app.user %}
         {{ form_start(commentForm) }}

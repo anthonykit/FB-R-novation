@@ -25,9 +25,7 @@
                     <div class="align-content-left">
                         {{ article.content | raw}}
                     </div>
-            {#<div class="etst"
-           {{ article.content | raw}}
-            </div>#}
+
             </div>
             </div>
             <style>
@@ -52,7 +50,7 @@
 
         {% endfor %}
 
-
+    {{ knp_pagination_render(articles) }}
 
 
 

@@ -11,6 +11,7 @@ use App\Form\ContactType;
 use App\Notification\ContactNotification;
 use App\Repository\Article3Repository;
 
+
 use Symfony\Component\Config\Loader\FileLoader;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -25,6 +26,7 @@ use Symfony\Component\Validator\Constraints\Date;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 
 
 
@@ -33,12 +35,16 @@ class BlogController extends Controller\AbstractController
     /**
     * @Route("/blog", name="blog")
     */
-    public function index(Article3Repository $repo)
+    public function index(Article3Repository $repo, Request $request, PaginatorInterface $paginator)
     {
 
-        $articles =$repo->findAll();
+        $donnees =$repo->findAll();
+        $articles = $paginator->paginate(
+            $donnees,
+            $request->query->getInt('page',1),
+            5
+        );
         return $this->render('blog/index.html.twig', [
-
         'controller_name' => 'BlogController',
             'articles'=> $articles,
             ]);
@@ -91,12 +97,14 @@ class BlogController extends Controller\AbstractController
 
     /**
      * @Route("/blog/new", name="blog_create")
+     * @Route("/blog/{id}/edit", name="blog_edit")
      * @return \Symfony\Component\HttpFoundation\Response
      * @return \Symfony\Component\Form\FormTypeInterface;
      */
-    public function create(Request $request, EntityManagerInterface $entityManager){
-
-        $article= new Article3();
+    public function create(Article3 $article = null,Request $request, EntityManagerInterface $entityManager){
+        if(!$article) {
+            $article = new Article3();
+        }
         $form= $this->createFormBuilder($article)
                     ->add('title')
                     ->add('content')
@@ -104,6 +112,9 @@ class BlogController extends Controller\AbstractController
                     ->getForm();
             $form->handleRequest($request);
             if ($form->isSubmitted()&& $form->isValid()){
+                if (!$article->getId()){
+                    $article->setCreatedAt(new \DateTime());
+                }
                 $file = $article->getImage();
                 $fileName= md5(uniqid()).'.' .$file->guessExtension();
                 try {
@@ -123,7 +134,8 @@ class BlogController extends Controller\AbstractController
                 return $this->redirectToRoute('show', ['id'=>$article->getId()]);
             }
         return $this->render('blog/create.html.twig',[
-            'formArticle' => $form->createView()
+            'formArticle' => $form->createView(),
+            'editMode'=>$article->getId()== !null
         ]);
     }
     /**
