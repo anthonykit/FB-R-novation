@@ -101,7 +101,7 @@ class BlogController extends Controller\AbstractController
      * @return \Symfony\Component\HttpFoundation\Response
      * @return \Symfony\Component\Form\FormTypeInterface;
      */
-    public function create(Article3 $article = null,Request $request, EntityManagerInterface $entityManager){
+    public function create(Article3 $article = null, Request $request, EntityManagerInterface $entityManager){
         if(!$article) {
             $article = new Article3();
         }

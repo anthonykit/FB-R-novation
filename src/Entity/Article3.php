@@ -6,18 +6,23 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Article3Repository")
+ * @Vich\Uploadable
+ *
  */
 class Article3
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+ /**
+ * @ORM\Id()
+    * @ORM\GeneratedValue()
+  * @ORM\Column(type="integer")
+  */
+  private $id;
+
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -45,6 +50,9 @@ class Article3
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="article", orphanRemoval=true)
      */
     private $comments;
+
+
+
 
 
 
@@ -124,10 +132,7 @@ class Article3
         return $this;
     }
 
-    /**
-     * @param Comment $comment
-     * @return $this
-     */
+
     public function removeComment(Comment $comment): self
     {
         if ($this->comments->contains($comment)) {
