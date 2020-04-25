@@ -24,10 +24,17 @@
                     <a class="nav-link" href="{{ path('blog') }}">Travaux Réalisés <span class="sr-only">(current)</span></a>
 
                 </li>
-                {% if  app.user %}
+                {% if  is_granted('ROLE_ADMIN') %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('blog_create') }}">Créer un article</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('admin_utilisateur') }}"
+                    tabindex="-1" aria-disabled="true">
+                        Gerer les utilisateurs
+                    </a>
+                </li>
+
             </ul>
                 {% endif %}
 
@@ -48,7 +55,7 @@
                     list-style: none;
 
                 }
-                li{
+                li.item{
                     list-style: none;
                 }
 

@@ -34,6 +34,8 @@ class Article3
      */
     private $image;
 
+
+
     /**
      * @ORM\Column(type="datetime")
      */

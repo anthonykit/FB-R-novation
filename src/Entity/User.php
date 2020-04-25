@@ -38,11 +38,17 @@ class User implements UserInterface
      */
     private $username;
 
+
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\Length(min="8", minMessage="Votre mot de passe doit comporter minimum 8 caractères")
      */
     private $password;
+
+    /**
+     * @ORM\Column(type="json")
+     */
+    private $roles = [];
 
     /**
      * @Assert\EqualTo(propertyPath="password", message="Vos mots de passes ne sont pas identique")
@@ -133,13 +139,33 @@ class User implements UserInterface
     {
         // TODO: Implement eraseCredentials() method.
     }
+
     public function getSalt()
     {
         // TODO: Implement getSalt() method.
     }
-    public function getRoles()
+
+    /**
+     * @return array
+     */
+    public function getRoles(): array
     {
-        return ['ROLE_USER'];
-        // TODO: Implement getRoles() method.
+        return $this->roles;
+         $roles[] = "ROLE_USER";
+
+            return array_unique($roles);
     }
+
+    /**
+     * @param array $roles
+     * @return User
+     */
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+        return $this;
+
+    }
+
+
 }
