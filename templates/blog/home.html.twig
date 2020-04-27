@@ -13,6 +13,7 @@
         <div class="MessageForm">
         <h3>Contactez nous!</h3>
         </div>
+    {% if app.user %}
         <div id="Contact" class="col-mt-4"></div>
         {{ form_start(form) }}
         <div class="row">
@@ -25,10 +26,17 @@
         </div>
     <div class="row">
         <div class="col"> {{ form_row(form.message,{'label':"Message"}) }}</div>
-
+        <div class="col"> {{ form_row(form.image,{'label':"Choisir un image"}) }}</div>
     </div>
         {{ form_row(form.envoyer) }}
         {{ form_end(form) }}
+    {% else %}
+    Veuillez vous connecter pour nous contacter!
+        <br>
+        <a href="{{ path('security_login') }}" class="btn btn-primary">Connexion</a>
+
+        <a href="{{ path('security_registration') }}" class="btn btn-success">Inscrivez vous!</a>
+    {% endif %}
 
 </div>
 

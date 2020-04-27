@@ -25,7 +25,7 @@
                 }
             </style>
             <h2 class="test">F.B Rénovation</h2>
-            <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('home') }}">Acceuil <span class="sr-only">(current)</span></a>
                 </li>
@@ -65,7 +65,7 @@
                     list-style: none;
 
                 }
-                li.item{
+                li.nav-item{
                     list-style: none;
                 }
 
@@ -76,42 +76,18 @@
 
             </style>
             {% if not app.user %}
-                <style>
-                    html{
-                        padding-top: 0;
-                        height: 100%;
-                    }
-                    body {
-                        margin:0;
-                        padding:0;
-                        font-family: sans-serif;
-                        background: linear-gradient(#141e30, #243b55);
-                    }
-                    ul{
-                        list-style: none;
 
-                    }
-                    li.item{
-                        list-style: none;
-                    }
-
-                    img{
-                        max-width: 100%;
-                        height: auto;
-                    }
-
-                </style>
-            <ul  id="test" class="form-inline my-2 my-lg-0">
-                    <li class= "item">
+            <ul class="navbar-nav ml-auto">
+                    <li class= "nav-item">
                         <a href="{{ path('security_login') }}" class="btn btn-primary">Connexion</a>
                     </li>
-                    <li class= "item">
+                    <li class= "nav-item">
                         <a href="{{ path('security_registration') }}" class="btn btn-success">S'inscrire</a>
                     </li>
 
                 {% else %}
 
-                    <li class= "item">
+                    <li class= "nav-item">
                         <a href="{{ path('security_logout') }}" class="btn btn-danger">Deconnexion</a>
                     </li>
 

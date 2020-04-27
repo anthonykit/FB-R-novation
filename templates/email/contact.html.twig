@@ -4,6 +4,5 @@
 <p> email:{{ contact.email }}</p>
 <p> Numéro de téléphone :{{ contact.phone }}</p>
 <p> Illustration de la demande:</p>
-<img src="{{ absolute_url(asset('{{contact.image }}')) }}">
-<img src="{{ absolute_url(asset('uploads/images/')) ~ contact.image }}" alt="" >
+<img src="{{ asset('demand/images/') ~ contact.image }}" alt="test" >
 <p> Contenu de la demande:{{ contact.message |raw }}</p>
